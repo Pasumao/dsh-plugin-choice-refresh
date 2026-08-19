@@ -46,7 +46,7 @@ dsh plugin --profile web add github:Pasumao/dsh-plugin-choice-refresh
 ## 自检
 
 ```powershell
-cd D:\dsh\plugins\dsh-plugin-choice-refresh
+# 在插件目录下（本地开发 clone / link 时）
 npm run smoke   # selfcheck + smoke-client
 ```
 
@@ -59,4 +59,4 @@ npm run smoke   # selfcheck + smoke-client
 
 ## 许可证
 
-MIT
+[MIT](./LICENSE)
