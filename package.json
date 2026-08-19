@@ -1,0 +1,61 @@
+{
+  "name": "dsh-plugin-choice-refresh",
+  "description": "DSH 选择增强插件：在 ask_user_question / ask_user_choice 的选择卡上提供「重新生成选项」（都不满意一键刷新）与「更多选项」（选项太少一键补充）按钮。纯前端交互实现（取消当前问题 + steer 提示模型重新提问），不改核心包、不新增工具。",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "设计说明.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pasumao/dsh-plugin-choice-refresh.git"
+  },
+  "homepage": "https://github.com/Pasumao/dsh-plugin-choice-refresh",
+  "bugs": {
+    "url": "https://github.com/Pasumao/dsh-plugin-choice-refresh/issues"
+  },
+  "scripts": {
+    "selfcheck": "node scripts/selfcheck.mjs",
+    "smoke": "node scripts/selfcheck.mjs && node scripts/smoke-client.mjs",
+    "pack": "npm pack"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "harness",
+    "cordis",
+    "plugin",
+    "choice",
+    "refresh",
+    "regenerate",
+    "options"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}
