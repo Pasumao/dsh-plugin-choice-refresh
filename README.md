@@ -16,6 +16,23 @@
 [dsh-plugin-image-tools](https://github.com/Pasumao/dsh-plugin-image-tools) 的
 图片选项卡都生效（图片卡由本插件直接渲染，复用其图片路由）。
 
+## 功能
+
+- 🔄 **重新生成选项**：`ask_user_question` / `ask_user_choice` 给出的选项都不满意时，
+  一键解除当前问题，让模型换一批完全不同的选项（换角度/风格/维度，5~8 个）重新提问；
+- ➕ **更多选项**：选项太少不够选时，一键让模型在保留原选项的基础上补充新选项（总数 6~10 个）；
+- 纯前端交互实现，**不注册新工具、不改核心包**；
+- 对原生文字选项卡与 `dsh-plugin-image-tools` 图片选项卡同时生效；
+- 与 `plan-review` 计划审阅卡兼容，不影响原生流程。
+
+## 配置
+
+无需任何配置，安装即用：
+
+- 不读取环境变量，不需要 API Key / token，不写配置文件；
+- 按钮文案走 `ctx.locale`（zh / en 双语），无需额外设置；
+- 行为由按钮注入的 `【系统 · 选项刷新】` / `【系统 · 更多选项】` 消息驱动，模型按指令重新提问。
+
 ## 安装
 
 ```powershell
@@ -23,6 +40,15 @@
 dsh plugin --profile web add dsh-plugin-choice-refresh
 # 或 GitHub
 dsh plugin --profile web add github:Pasumao/dsh-plugin-choice-refresh
+```
+
+源码安装（本地开发 / 调试）：
+
+```bash
+git clone https://github.com/Pasumao/dsh-plugin-choice-refresh.git
+cd dsh-plugin-choice-refresh
+npm install        # 或 pnpm install
+# 以 link: 方式挂载进 profile，详见 设计说明.md
 ```
 
 装完刷新浏览器即生效（profile 已有 dsh-client-hmr 时会自动热更新，无需重启）。
@@ -56,6 +82,11 @@ npm run smoke   # selfcheck + smoke-client
 - 与 `dsh-plugin-image-tools` 共存的图片卡直接兼容；未安装时纯文字选项照常。
 - `plan-review` 意图（计划审阅卡）放行给原生 `PlanReviewPanel`，不受影响。
 - 依赖客户端服务：`slots` / `locale` / `sessions` / `remote`。
+
+## AI 生成声明
+
+代码与文档由 AI 辅助生成（DeepSeek Harness），均经人工审查与实机验证
+（`npm run smoke`：selfcheck + 假客户端冒烟）。
 
 ## 许可证
 
