@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.4] - 2026-08-29
+
+- 文档：兼容性补实测版本声明（DSH 0.1.1-rc.2）；
+- 元数据：description 加「生态唯一」钩子，keywords 10 → 16；
+- 新增英文版 README.en.md 与双语切换行；CHANGELOG.md 纳入 npm files。
 ## [0.1.3] - 2026-08-25
 
 - 相关插件段新增 dsh-plugin-windows-guard（Windows 环境防坑守则 skill 插件，互相引流）。

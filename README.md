@@ -4,6 +4,8 @@
 ![License](https://img.shields.io/github/license/Pasumao/dsh-plugin-choice-refresh)
 ![AI Assisted](https://img.shields.io/badge/AI-Assisted-8A2BE2)
 
+[**中文**](./README.md) | [English](./README.en.md)
+
 **dsh 插件市场里唯一的选择增强插件**：给 `ask_user_question` / `ask_user_choice` 的选择卡加上两个按钮——
 选项都不满意？一键让模型换一批完全不同的。选项太少？一键让模型补充。
 
@@ -15,6 +17,18 @@
 纯前端交互实现，**不注册新工具、不改核心包**；对原生文字选项和
 [dsh-plugin-image-tools](https://github.com/Pasumao/dsh-plugin-image-tools) 的
 图片选项卡都生效（图片卡由本插件直接渲染，复用其图片路由）。
+
+## 效果图
+
+![choice-refresh 实机截图：选择卡底部出现「重新生成选项 / 更多选项」按钮](docs/choice-buttons.png)
+
+选择卡底部自动多出两个按钮：
+
+![choice-refresh 实机截图：点「更多选项」后模型补充选项并重新提问](docs/choice-more-options.png)
+
+点「➕ 更多选项」后：模型保留原选项、补充到 6~10 个并重新提问。
+
+> 真实 Web GUI 截图。
 
 ## 功能
 
