@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-choice-refresh",
-  "description": "DSH 选择增强插件：在 ask_user_question / ask_user_choice 的选择卡上提供「重新生成选项」（都不满意一键刷新）与「更多选项」（选项太少一键补充）按钮。纯前端交互实现（取消当前问题 + steer 提示模型重新提问），不改核心包、不新增工具。",
+  "description": "DSH 选择增强插件（生态唯一）：给 ask_user_question / ask_user_choice 的选择卡加「重新生成选项 / 更多选项」两个按钮——选项都不满意一键换一批（换角度/维度，5~8 个），选项太少一键补充到 6~10 个。纯前端交互实现，不改核心包、不新增工具，原生文字卡与图片选择卡通吃。",
   "version": "0.1.3",
   "type": "module",
   "main": "lib/index.js",
@@ -45,7 +45,13 @@
     "plugin",
     "choice",
     "refresh",
-    "regenerate",
+    "regenerate-options",
+    "more-options",
+    "ask-user",
+    "question",
+    "ux",
+    "chat-ui",
+    "frontend",
     "options"
   ],
   "license": "MIT",
