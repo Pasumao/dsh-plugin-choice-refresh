@@ -87,7 +87,7 @@ npm run smoke   # selfcheck + smoke-client
 
 ## Compatibility
 
-- Tested on DSH `0.1.1-rc.2`; requires the DSH web GUI (an entry in the `conversation.composer` chain, priority -300).
+- Tested on DSH `0.1.2-rc.1` (since 0.1.6 this README documents the adaptation; 0.1.5 migrated the card entry to the new `pendingInteraction` / `PendingQuestion` protocol — select receives a single `PendingQuestion`, and answers go through `.answer({answers})` / `.cancel()`); requires the DSH web GUI (an entry in the `conversation.composer` chain, priority -300).
 - Directly compatible with the image cards of a co-installed `dsh-plugin-image-tools`; without it, plain text options work as usual.
 - `plan-review` intents (plan review cards) are passed through to the native `PlanReviewPanel`, unaffected.
 - Depends on the client services `slots` / `locale` / `sessions` / `remote`.

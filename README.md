@@ -92,7 +92,10 @@ npm run smoke   # selfcheck + smoke-client
 
 ## 兼容性
 
-- 实测于 DSH `0.1.2-rc.1`（0.1.5 起适配该版的 `pendingInteraction` / `PendingQuestion` 新协议）；需要 DSH web GUI（`conversation.composer` 链条目，priority -300）。
+- 实测于 DSH `0.1.2-rc.1`（0.1.5 起适配该版选择卡新协议：`conversation.composer` 链的
+  select 入参改为单对象 `pendingInteraction`（原生 `PendingQuestion`），应答走
+  `.answer({answers})` / `.cancel()`；0.1.6 起测试自带 react/react-dom，不再依赖宿主安装布局）；
+  需要 DSH web GUI（`conversation.composer` 链条目，priority -300）。
 - 与 `dsh-plugin-image-tools` 共存的图片卡直接兼容；未安装时纯文字选项照常。
 - `plan-review` 意图（计划审阅卡）放行给原生 `PlanReviewPanel`，不受影响。
 - 依赖客户端服务：`slots` / `locale` / `sessions` / `remote`。

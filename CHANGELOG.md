@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6] - 2026-09-04
+
+- 文档：中英 README「兼容性」节补全 dsh 0.1.2-rc.1 适配细节（`pendingInteraction` /
+  `PendingQuestion` 协议、应答走 `.answer({answers})` / `.cancel()`）；测试基建自带
+  react/react-dom@19 devDependencies，`npm run smoke` 不再依赖宿主安装布局。
+# Changelog
+
 ## [0.1.5] - 2026-09-04
 
 - 适配 dsh 0.1.2-rc.1：conversation.composer 链条目 select 入参由 `{interactions}` 改为 `{pendingInteraction}`（原生 PendingQuestion 单对象），按 `kind`/questions 鸭子类型认领，plan-review 继续放行；
