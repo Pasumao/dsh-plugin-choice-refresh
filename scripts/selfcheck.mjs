@@ -10,9 +10,11 @@ import { strict as assert } from 'node:assert'
 
 const require = createRequire(import.meta.url)
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const profileRequire = createRequire(join('C:/Users/18303/.dsh/profiles/node_modules', 'noop.cjs'))
-const reactRoot = dirname(profileRequire.resolve('react'))
-const reactModule = profileRequire('react')
+// 优先用插件自带的 devDependencies react（0.1.5 起 dsh-app 根部的 react 不再保证
+// 是 17+、无 jsx-runtime）；本地没有时退回 profile 共享树。
+const localRequire = createRequire(join(ROOT, 'noop.cjs'))
+const reactRoot = dirname(localRequire.resolve('react'))
+const reactModule = localRequire('react')
 
 // 1) 模拟浏览器模块加载器并物化 factory
 let spec = null
@@ -107,26 +109,36 @@ ok('parseRecommendedLabel strips suffix', () => {
   assert.deepEqual(mod.parseRecommendedLabel('A'), { label: 'A', recommended: false })
 })
 
-// --- selectChoice ---
+// --- selectChoice（dsh 0.1.2 协议：入参 { pendingInteraction }，载体即原生
+// PendingQuestion——questions 直挂、带 answer()/cancel()） ---
+function fakePending(questions, extra) {
+  return {
+    kind: 'question',
+    key: 'q:test',
+    sessionId: 's1',
+    questions,
+    answer: async () => {},
+    cancel: async () => {},
+    ...extra,
+  }
+}
 ok('selectChoice claims normal question', () => {
-  const q = { kind: 'question', key: 'q:1', sessionId: 's1', payload: { questions: [{ id: 'a', question: 'q', options: [{ label: 'A' }] }] } }
-  assert.equal(mod.selectChoice({ interactions: [q] }), q)
+  const pending = fakePending([{ id: 'a', question: 'q', options: [{ label: 'A' }] }])
+  assert.equal(mod.selectChoice({ pendingInteraction: pending }), pending)
 })
-ok('selectChoice skips plan-review and approval', () => {
-  const plan = { kind: 'question', key: 'q:1', sessionId: 's1', payload: { questions: [{ id: 'a', question: 'q', detail: 'plan', intent: { kind: 'plan-review', approve: '执行' }, options: [{ label: '执行' }] }] } }
-  const approval = { kind: 'approval', key: 'a:1', sessionId: 's1', payload: {} }
-  assert.equal(mod.selectChoice({ interactions: [approval, plan] }), null, 'plan-review 应放行给原生 PlanReviewPanel')
+ok('selectChoice passes plan-review to native', () => {
+  const plan = fakePending([{ id: 'a', question: 'q', detail: 'plan', intent: { kind: 'plan-review', approve: '执行' }, options: [{ label: '执行' }] }], { kind: 'plan-review' })
+  assert.equal(mod.selectChoice({ pendingInteraction: plan }), null, 'plan-review 应放行给原生 PlanReviewPanel')
 })
-ok('selectChoice prefers question over approval and falls through to later', () => {
-  const q = { kind: 'question', key: 'q:2', sessionId: 's2', payload: { questions: [{ id: 'b', question: 'q2' }] } }
-  const approval = { kind: 'approval', key: 'a:1', sessionId: 's1', payload: {} }
-  assert.equal(mod.selectChoice({ interactions: [approval, q] }), q)
-  assert.equal(mod.selectChoice({ interactions: [approval] }), null)
+ok('selectChoice rejects non-question values', () => {
+  assert.equal(mod.selectChoice({ pendingInteraction: null }), null)
+  assert.equal(mod.selectChoice({ pendingInteraction: { questions: [] } }), null)
+  assert.equal(mod.selectChoice({}), null)
 })
 ok('selectChoice claims image-marked question too', () => {
   const marker = '<!--dsh-pick:v1:' + encodeBase64Url(JSON.stringify({ pickId: 'p1', images: [0] })) + '-->'
-  const q = { kind: 'question', key: 'q:3', sessionId: 's3', payload: { questions: [{ id: 'c', question: '选图', detail: marker, options: [{ label: 'A' }] }] } }
-  assert.equal(mod.selectChoice({ interactions: [q] }), q, '带图问题应由本插件渲染（含刷新/更多按钮）')
+  const pending = fakePending([{ id: 'c', question: '选图', detail: marker, options: [{ label: 'A' }] }])
+  assert.equal(mod.selectChoice({ pendingInteraction: pending }), pending, '带图问题应由本插件渲染（含刷新/更多按钮）')
 })
 
 console.log(`\n[dsh-plugin-choice-refresh] ${passed} checks passed`)

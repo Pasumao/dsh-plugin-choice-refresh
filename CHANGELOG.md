@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5] - 2026-09-04
+
+- 适配 dsh 0.1.2-rc.1：conversation.composer 链条目 select 入参由 `{interactions}` 改为 `{pendingInteraction}`（原生 PendingQuestion 单对象），按 `kind`/questions 鸭子类型认领，plan-review 继续放行；
+- 待答载体 PendingChoice 改为包装 PendingQuestion（`.answer({answers})` / `.cancel()` 直调，替代旧 `wait.respond` 协议）；
+- steer 兜底路径改为 `ctx.remote.session.prompt`（0.1.2 起 remote 命名空间为单数且要求 requestId）；主路径 sessions.binding().session.prompt 不变。
+# Changelog
+
 ## [0.1.4] - 2026-08-29
 
 - 文档：兼容性补实测版本声明（DSH 0.1.1-rc.2）；
